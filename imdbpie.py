@@ -90,7 +90,7 @@ class Imdb(object):
 
     @staticmethod
     def find_imdb_id(text):
-        imdb_id_match = re.search(r'/tt(\d{2,})', text)
+        imdb_id_match = re.search(r'tt(\d{3,})', text)
         if not imdb_id_match:
             return False
         else:

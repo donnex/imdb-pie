@@ -1,4 +1,4 @@
-from nose.tools import assert_true, assert_equal
+from nose.tools import assert_false, assert_true, assert_equal
 from imdbpie import Imdb, Movie
 
 
@@ -34,6 +34,12 @@ class TestImdb(object):
     def test_popular_shows(self):
         shows = self.imdb.popular_shows()
         assert_equal(len(shows), 50)
+
+    def test_find_imdb_id_from_string(self):
+        assert_equal(Imdb.find_imdb_id('asd www.imdb.com/title/tt0499549/ asdad'), 'tt0499549')
+        assert_equal(Imdb.find_imdb_id('tt0499549'), 'tt0499549')
+        assert_equal(Imdb.find_imdb_id('text tt0499549 text'), 'tt0499549')
+        assert_false(self.imdb.find_imdb_id('asd'))
 
 
 class TestMovie(object):
