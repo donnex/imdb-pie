@@ -111,68 +111,70 @@ class Person(object):
 
 class Movie(object):
     def __init__(self, **kwargs):
-        self.imdb_id = kwargs.get('tconst')
-        self.title = kwargs.get('title')
-        self.year = int(kwargs.get('year'))
-        self.tagline = kwargs.get('tagline')
-        self.rating = kwargs.get('rating')
-        self.genres = kwargs.get('genres')
-        self.votes = kwargs.get('num_votes')
+        self.data = kwargs
+
+        self.imdb_id = self.data.get('tconst')
+        self.title = self.data.get('title')
+        self.year = int(self.data.get('year'))
+        self.tagline = self.data.get('tagline')
+        self.rating = self.data.get('rating')
+        self.genres = self.data.get('genres')
+        self.votes = self.data.get('num_votes')
         self.imdb_url = 'http://www.imdb.com/title/{0}/'.format(self.imdb_id)
 
         self.plot_outline = None
-        if 'plot' in kwargs and 'outline' in kwargs['plot']:
-            self.plot_outline = kwargs['plot']['outline']
+        if 'plot' in self.data and 'outline' in self.data['plot']:
+            self.plot_outline = self.data['plot']['outline']
 
         self.runtime = None
-        if 'runtime' in kwargs:
+        if 'runtime' in self.data:
             self.runtime = '{0} min'.format(
-                str(int((kwargs['runtime']['time'] / 60))))
+                str(int((self.data['runtime']['time'] / 60))))
 
         self.poster_url = None
-        if 'image' in kwargs and 'url' in kwargs['image']:
-            self.poster_url = kwargs['image']['url']
+        if 'image' in self.data and 'url' in self.data['image']:
+            self.poster_url = self.data['image']['url']
 
         self.cover_url = None
-        if 'image' in kwargs and 'url' in kwargs['image']:
-            self.cover_url = '{}_SX214_.jpg'.format(
-                                kwargs['image']['url'].replace('.jpg', ''))
+        if 'image' in self.data and 'url' in self.data['image']:
+            self.cover_url = '{}_SX214_.jpg'.format(self.data['image']['url'].
+                                                    replace('.jpg', ''))
 
         self.release_date = None
-        if 'release_date' in kwargs and 'normal' in kwargs['release_date']:
-            self.release_date = kwargs['release_date']['normal']
+        if 'release_date' in self.data and 'normal' in self.data['release_date']:
+            self.release_date = self.data['release_date']['normal']
 
         self.certification = None
-        if 'certificate' in kwargs and 'certificate' in kwargs['certificate']:
-            self.certification = kwargs['certificate']['certificate']
+        if 'certificate' in self.data and 'certificate' in self.data['certificate']:
+            self.certification = self.data['certificate']['certificate']
 
         self.trailer_img_url = None
-        if ('trailer' in kwargs and 'slates' in kwargs['trailer'] and
-                kwargs['trailer']['slates']):
-            self.trailer_img_url = kwargs['trailer']['slates'][0]['url']
+        if ('trailer' in self.data and 'slates' in self.data['trailer'] and
+                self.data['trailer']['slates']):
+            self.trailer_img_url = self.data['trailer']['slates'][0]['url']
 
         # Directors
         self.directors = []
-        if kwargs.get('directors_summary'):
-            for director in kwargs['directors_summary']:
+        if self.data.get('directors_summary'):
+            for director in self.data['directors_summary']:
                 self.directors.append(Person(**director))
 
         # Actors
         self.actors = []
-        if kwargs.get('cast_summary'):
-            for cast in kwargs['cast_summary']:
+        if self.data.get('cast_summary'):
+            for cast in self.data['cast_summary']:
                 self.actors.append(Person(**cast))
 
         # Writers
         self.writers = []
-        if kwargs.get('writers_summary'):
-            for writer in kwargs['writers_summary']:
+        if self.data.get('writers_summary'):
+            for writer in self.data['writers_summary']:
                 self.writers.append(Person(**writer))
 
         # Trailers
         self.trailers = {}
-        if 'trailer' in kwargs and 'encodings' in kwargs['trailer']:
-            for k, v in kwargs['trailer']['encodings'].items():
+        if 'trailer' in self.data and 'encodings' in self.data['trailer']:
+            for k, v in self.data['trailer']['encodings'].items():
                 self.trailers[v['format']] = v['url']
 
     def __repr__(self):
