@@ -34,6 +34,9 @@ class Imdb(object):
     def find_movie_by_id(self, imdb_id):
         url = self.build_url('/title/maindetails', {'tconst': imdb_id})
         result = self.get(url)
+        if 'error' in result:
+            return False
+
         movie = Movie(**result['data'])
         return movie
 

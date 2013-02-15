@@ -27,6 +27,10 @@ class TestImdb(object):
         results = self.imdb.find_movie_by_id('tt0382932')
         assert_true(isinstance(results, Movie))
 
+    def test_search_for_invalid_id(self):
+        results = self.imdb.find_movie_by_id('tt1')
+        assert_false(results)
+
     def test_top250(self):
         movies = self.imdb.top_250()
         assert_equal(len(movies), 250)
