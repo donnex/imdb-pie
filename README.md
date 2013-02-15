@@ -7,7 +7,7 @@ Python IMDB client using the IMDB json web service made available for their iOS 
 ### Create an instance of ImdbPie
 
     imdb = Imdb()
-    imdb = Imdb(anonymize=True}) # to proxy requests
+    imdb = Imdb(anonymize=True) # to proxy requests
 
 ### Search for a movie by title
 
